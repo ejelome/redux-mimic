@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 
 import { decrement, increment } from "../actions";
-import { CounterContext } from "../context";
+import { Context } from "../context";
 
 const Counter = () => {
-  const { state, dispatch } = useContext(CounterContext);
+  const { state, dispatch } = useContext(Context);
   const { count } = state;
 
   const handleIncrement = () => dispatch(increment());

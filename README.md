@@ -113,12 +113,12 @@ import React from "react";
 
 import Title from "./components/Title";
 
-import { CounterProvider } from "./context";
+import { Provider } from "./context";
 
 const App = () => (
-  <CounterProvider>
+  <Provider>
     <Title />
-  </CounterProvider>
+  </Provider>
 );
 
 export default App;

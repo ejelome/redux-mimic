@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 
 import { setTitle } from "../actions";
-import { CounterContext } from "../context";
+import { Context } from "../context";
 
 const Title = () => {
-  const { state, dispatch } = useContext(CounterContext);
+  const { state, dispatch } = useContext(Context);
   const { title } = state;
 
   const handleChange = ({ target: { value } }) => dispatch(setTitle(value));
