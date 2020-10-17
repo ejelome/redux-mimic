@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { increment } from "../actions";
+import { decrement,increment } from "../actions";
 import { CounterContext } from "../context";
 
 const Counter = () => {
@@ -8,9 +8,11 @@ const Counter = () => {
   const { count } = state;
 
   const handleIncrement = () => dispatch(increment());
+  const handleDecrement = () => dispatch(decrement());
 
   return (
     <>
+      <button onClick={handleDecrement}>-</button>
       <code>{count}</code>
       <button onClick={handleIncrement}>+</button>
     </>
