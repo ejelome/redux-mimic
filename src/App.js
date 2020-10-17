@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 
-import { INCREMENT, SET_TITLE } from "./actionTypes";
+import { increment, setTitle } from "./actions";
 import reducer from "./reducer";
 
 const initialContext = {};
@@ -21,8 +21,7 @@ const Title = () => {
   const { state, dispatch } = useContext(CounterContext);
   const { title } = state;
 
-  const handleSetTitle = ({ target: { value } }) =>
-    dispatch({ type: SET_TITLE, payload: { title: value } });
+  const handleSetTitle = ({ target: { value } }) => dispatch(setTitle(value));
 
   return (
     <>
@@ -36,7 +35,7 @@ const Counter = () => {
   const { state, dispatch } = useContext(CounterContext);
   const { count } = state;
 
-  const handleIncrement = () => dispatch({ type: INCREMENT });
+  const handleIncrement = () => dispatch(increment());
 
   return (
     <>
