@@ -1,23 +1,10 @@
 import React, { createContext, useContext, useReducer } from "react";
 
-import { INCREMENT,SET_TITLE } from "./actionTypes";
+import { INCREMENT, SET_TITLE } from "./actionTypes";
+import reducer from "./reducer";
 
 const initialContext = {};
 const CounterContext = createContext(initialContext);
-
-const reducer = (state, { payload, type }) => {
-  let { count } = state;
-
-  switch (type) {
-    case SET_TITLE:
-      return { ...state, ...payload };
-    case INCREMENT:
-      count += 1;
-      return { ...state, count };
-    default:
-      return state;
-  }
-};
 
 const initialState = { count: 0 };
 const init = (initialState) => initialState;
