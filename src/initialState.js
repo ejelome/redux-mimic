@@ -1,5 +1,4 @@
 const initialState = {
-  title: "hello, world",
   count: 0,
 };
 

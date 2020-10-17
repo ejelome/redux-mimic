@@ -1,9 +1,4 @@
-import { DECREMENT,INCREMENT, SET_TITLE } from "./actionTypes";
-
-export const setTitle = (newTitle) => ({
-  type: SET_TITLE,
-  payload: { title: newTitle },
-});
+import { DECREMENT, INCREMENT } from "./actionTypes";
 
 export const increment = () => ({ type: INCREMENT });
 

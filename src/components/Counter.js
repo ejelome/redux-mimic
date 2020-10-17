@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { decrement,increment } from "../actions";
+import { decrement, increment } from "../actions";
 import { CounterContext } from "../context";
 
 const Counter = () => {
