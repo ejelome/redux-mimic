@@ -1,12 +1,10 @@
 import React, { createContext, useReducer } from "react";
 
+import { init, initialState } from "./initialState";
 import reducer from "./reducer";
 
 const initialContext = {};
 const CounterContext = createContext(initialContext);
-
-const initialState = { title: "hello, world", count: 0 };
-const init = (initialState) => initialState;
 
 const CounterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState, init);
