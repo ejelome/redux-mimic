@@ -1,9 +1,11 @@
-import { DECREMENT, INCREMENT } from "./actionTypes";
+import { DECREMENT, INCREMENT, SET_TITLE } from "./actionTypes";
 
 const reducer = (state, { payload, type }) => {
   let { count } = state;
 
   switch (type) {
+    case SET_TITLE:
+      return { ...state, ...payload };
     case INCREMENT:
       count += 1;
       return { ...state, count };
