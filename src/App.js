@@ -1,15 +1,11 @@
 import React, { createContext, useContext, useReducer } from "react";
 
-const ACTIONS = {
-  SET_TITLE: "SET_TITLE",
-  INCREMENT: "INCREMENT",
-};
+import { INCREMENT,SET_TITLE } from "./actionTypes";
 
 const initialContext = {};
 const CounterContext = createContext(initialContext);
 
 const reducer = (state, { payload, type }) => {
-  const { SET_TITLE, INCREMENT } = ACTIONS;
   let { count } = state;
 
   switch (type) {
@@ -35,7 +31,6 @@ const CounterProvider = ({ children }) => {
 };
 
 const Title = () => {
-  const { SET_TITLE } = ACTIONS;
   const { state, dispatch } = useContext(CounterContext);
   const { title } = state;
 
@@ -51,7 +46,6 @@ const Title = () => {
 };
 
 const Counter = () => {
-  const { INCREMENT } = ACTIONS;
   const { state, dispatch } = useContext(CounterContext);
   const { count } = state;
 
