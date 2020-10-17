@@ -9,9 +9,11 @@ const Title = () => {
 
   const handleSetTitle = ({ target: { value } }) => dispatch(setTitle(value));
 
+  const placeholder = "Enter title";
+
   return (
     <>
-      <input onChange={handleSetTitle} />
+      <input placeholder={placeholder} onChange={handleSetTitle} />
       <h1>{title}</h1>
     </>
   );
