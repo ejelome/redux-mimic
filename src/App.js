@@ -1,17 +1,20 @@
 import React, { createContext, useContext, useReducer } from "react";
 
 const ACTIONS = {
+  SET_TITLE: "SET_TITLE",
   INCREMENT: "INCREMENT",
 };
 
 const initialContext = {};
 const CounterContext = createContext(initialContext);
 
-const reducer = (state, { type }) => {
-  const { INCREMENT } = ACTIONS;
+const reducer = (state, { payload, type }) => {
+  const { SET_TITLE, INCREMENT } = ACTIONS;
   let { count } = state;
 
   switch (type) {
+    case SET_TITLE:
+      return { ...state, ...payload };
     case INCREMENT:
       count += 1;
       return { ...state, count };
@@ -31,6 +34,22 @@ const CounterProvider = ({ children }) => {
   return <Provider value={values}>{children}</Provider>;
 };
 
+const Title = () => {
+  const { SET_TITLE } = ACTIONS;
+  const { state, dispatch } = useContext(CounterContext);
+  const { title } = state;
+
+  const handleSetTitle = ({ target: { value } }) =>
+    dispatch({ type: SET_TITLE, payload: { title: value } });
+
+  return (
+    <>
+      <input onChange={handleSetTitle} />
+      <h1>{title}</h1>
+    </>
+  );
+};
+
 const Counter = () => {
   const { INCREMENT } = ACTIONS;
   const { state, dispatch } = useContext(CounterContext);
@@ -48,6 +67,7 @@ const Counter = () => {
 
 const App = () => (
   <CounterProvider>
+    <Title />
     <Counter />
   </CounterProvider>
 );
