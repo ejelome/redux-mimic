@@ -1,22 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { increment } from "./actions";
+import Counter from "./components/Counter";
 import Title from "./components/Title";
-import { CounterContext, CounterProvider } from "./context";
-
-const Counter = () => {
-  const { state, dispatch } = useContext(CounterContext);
-  const { count } = state;
-
-  const handleIncrement = () => dispatch(increment());
-
-  return (
-    <>
-      <code>{count}</code>
-      <button onClick={handleIncrement}>+</button>
-    </>
-  );
-};
+import { CounterProvider } from "./context";
 
 const App = () => (
   <CounterProvider>
