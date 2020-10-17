@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer } from "react";
 
 const ACTIONS = {
-  INCREMENT: "increment",
+  INCREMENT: "INCREMENT",
 };
 
 const initialContext = {};
