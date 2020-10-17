@@ -1,4 +1,5 @@
 const initialState = {
+  title: "My Counter",
   count: 0,
 };
 
