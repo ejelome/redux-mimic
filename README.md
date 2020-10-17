@@ -14,7 +14,7 @@ Mimic [Redux](https://redux.js.org) with [React](https://reactjs.org) [Hooks](ht
   - [Demo](#demo)
   - [Setup](#setup)
   - [Usage](#usage)
-  - [Code structure](#code-structure)
+  - [Structure](#structure)
   - [How to use](#how-to-use)
     - [1. Reading](#1-reading)
       - [1.1. Define state](#11-define-state)
@@ -55,7 +55,7 @@ See <https://ejelome-redux-mimic.netlify.app>.
 
 ---
 
-## Code structure
+## Structure
 
 ```shell
 src/
