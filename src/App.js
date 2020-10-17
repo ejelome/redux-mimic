@@ -20,7 +20,7 @@ const reducer = (state, { type }) => {
 const initialState = { count: 0 };
 const init = (initialState) => initialState;
 
-const App = () => {
+const Counter = () => {
   const [state, dispatch] = useReducer(reducer, initialState, init);
   const { count } = state;
 
@@ -34,5 +34,11 @@ const App = () => {
     </>
   );
 };
+
+const App = () => (
+  <>
+    <Counter />
+  </>
+);
 
 export default App;
