@@ -1,21 +1,8 @@
 import React, { useContext } from "react";
 
-import { increment, setTitle } from "./actions";
+import { increment } from "./actions";
+import Title from "./components/Title";
 import { CounterContext, CounterProvider } from "./context";
-
-const Title = () => {
-  const { state, dispatch } = useContext(CounterContext);
-  const { title } = state;
-
-  const handleSetTitle = ({ target: { value } }) => dispatch(setTitle(value));
-
-  return (
-    <>
-      <input onChange={handleSetTitle} />
-      <h1>{title}</h1>
-    </>
-  );
-};
 
 const Counter = () => {
   const { state, dispatch } = useContext(CounterContext);
