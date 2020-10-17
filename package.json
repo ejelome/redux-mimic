@@ -15,6 +15,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint",
+    "format": "prettier",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -33,6 +34,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-simple-import-sort": "^5.0.3"
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "prettier": "^2.1.2"
   }
 }
