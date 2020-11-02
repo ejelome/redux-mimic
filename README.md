@@ -16,15 +16,6 @@ Mimic [Redux](https://redux.js.org) with [React](https://reactjs.org) [Hooks](ht
   - [Usage](#usage)
   - [Structure](#structure)
   - [How to use](#how-to-use)
-    - [1. Reading](#1-reading)
-      - [1.1. Define state](#11-define-state)
-      - [1.2. Access the state](#12-access-the-state)
-      - [1.3. Subscribe component](#13-subscribe-component)
-    - [2. Updating](#2-updating)
-      - [2.1. Define an action type](#21-define-an-action-type)
-      - [2.2. Define an action](#22-define-an-action)
-      - [2.3. Define a reducer](#23-define-a-reducer)
-      - [2.4. Call from dispatch](#24-call-from-dispatch)
   - [License](#license)
 
 <!-- markdown-toc end -->
@@ -60,142 +51,224 @@ See <https://ejelome-redux-mimic.netlify.app>.
 ```shell
 src/
 ├── App.js
-├── components
-│   └── <Component>.js
-├── initialState.js
-├── actionTypes.js
-├── actions.js
-├── reducer.js
+├── components/
+│   └── <component>/
+│       ├── actions.js
+│       ├── actionTypes.js
+│       ├── <Component>.js
+│       ├── initialState.js
+│       └── reducer.js
 └── context.js
 ```
 
+---
+
 ## How to use
 
-### 1. Reading
+<details>
+  <summary>1.1. Define initial state</summary>
 
-#### 1.1. Define state
+```diff
+--- src/components/hello-world/initialState.js
++++ src/components/hello-world/initialState.js
+@@ -0,0 +1,3 @@
++const initialState = { title: "hello, world" };
++
++export default initialState;
 
-> _Add the new state._
-
-```javascript
-// file: src/initialState.js
-const initialState = {
-  title: "My Counter",
-};
 ```
 
-#### 1.2. Access the state
+[&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/components/hello-world/initialState.js)
 
-> _Access the state from context._
+</details>
 
-```javascript
-// file: src/components/Title.js
-import React, { useContext } from "react";
+<details>
+  <summary>1.2. Define action type</summary>
 
-import { Context } from "../context";
-
-const Title = () => {
-  const { state } = useContext(Context);
-  const { title } = state;
-  return <h1>{title}</h1>;
-};
-
-export default Title;
+```diff
+--- src/components/hello-world/actionTypes.js
++++ src/components/hello-world/actionTypes.js
+@@ -0,0 +1 @@
++export const SET_TITLE = "SET_TITLE";
 ```
 
-#### 1.3. Subscribe component
+[&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/components/hello-world/actionTypes.js)
 
-> _Place its component under the Provider to get access to context._
+</details>
 
-```javascript
-// file: src/App.js
-import React from "react";
+<details>
+  <summary>1.3. Define action</summary>
 
-import Title from "./components/Title";
-
-import { Provider } from "./context";
-
-const App = () => (
-  <Provider>
-    <Title />
-  </Provider>
-);
-
-export default App;
+```diff
+--- src/components/hello-world/actions.js
++++ src/components/hello-world/actions.js
+@@ -0,0 +1,6 @@
++import { SET_TITLE } from "./actionTypes";
++
++export const setTitle = (newTitle) => ({
++  type: SET_TITLE,
++  payload: { title: newTitle },
++});
 ```
 
-### 2. Updating
+[&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/components/hello-world/actions.js)
 
-#### 2.1. Define an action type
+</details>
 
-> _Add a new action type for the action and the dispatcher._
+<details>
+  <summary>1.4. Define reducer</summary>
 
-```javascript
-// file: src/actionTypes.js
-export const SET_TITLE = "SET_TITLE";
+```diff
+--- src/components/hello-world/reducer.js
++++ src/components/hello-world/reducer.js
+@@ -0,0 +1,14 @@
++import { SET_TITLE } from "./actionTypes";
++
++const reducer = (state, { type, payload }) => {
++  switch (type) {
++    case SET_TITLE:
++      const title = payload.title;
++
++      return { ...state, title };
++    default:
++      return state;
++  }
++};
++
++export default reducer;
 ```
 
-#### 2.2. Define an action
+[&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/components/hello-world/reducer.js)
 
-> _Add a corresponding action for this type._
+</details>
 
-```javascript
-// file: src/actions.js
-import { SET_TITLE } from "./actionTypes";
+<details>
+  <summary>1.5. Define utils</summary>
 
-export const setTitle = (newTitle) => ({
-  type: SET_TITLE,
-  payload: { title: newTitle },
-});
+```diff
+--- src/utils.js
++++ src/utils.js
+@@ -0,0 +1,11 @@
++export const init = (initialArg) => initialArg;
++
++export const combineReducers = (reducers) => (state, action) => {
++  const newState = {};
++
++  Object.keys(reducers).forEach((key) => {
++    newState[key] = reducers[key](state[key], action);
++  });
++
++  return newState;
++};
 ```
 
-#### 2.3. Define a reducer
+[&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/utils.js)
 
-> _Add a corresponding reducer for this type._
+</details>
 
-```javascript
-// file: src/reducer.js
-import { SET_TITLE } from "./actionTypes";
+<details>
+  <summary>1.6. Register to context</summary>
 
-const reducer = (state, { payload, type }) => {
-  switch (type) {
-    case SET_TITLE:
-      return { ...state, ...payload };
-    default:
-      return state;
-  }
-};
-
-export default reducer;
+```diff
+--- src/context.js
++++ src/context.js
+@@ -0,0 +1,19 @@
++import React, { createContext, useReducer } from "react";
++
++import helloWorldState from "./components/hello-world/initialState";
++import helloWorldReducer from "./components/hello-world/reducer";
++import { combineReducers, init } from "./utils";
++
++const initialStates = { helloWorld: helloWorldState };
++
++const Context = createContext(initialStates);
++
++const Provider = ({ children }) => {
++  const reducers = combineReducers({ helloWorld: helloWorldReducer });
++  const [state, dispatch] = useReducer(reducers, initialStates, init);
++  const values = { state, dispatch };
++
++  return <Context.Provider value={values}>{children}</Context.Provider>;
++};
++
++export { Context, Provider };
 ```
 
-#### 2.4. Call from dispatch
+[&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/context.js)
 
-> _Call dispatch with this type and payload._
+</details>
 
-```javascript
-// file: src/components/Title.js
-import React, { useContext } from "react";
+<details>
+  <summary>1.7. Access state</summary>
 
-import { Context } from "../context";
-import { setTitle } from "../actions";
-
-const Title = () => {
-  const { state, dispatch } = useContext(Context);
-  const { title } = state;
-
-  const handleChange = ({ target: { value } }) => dispatch(setTitle(value));
-
-  return (
-    <>
-      <input onChange={handleChange} />
-      <h1>{title}</h1>
-    </>
-  );
-};
-
-export default Title;
+```diff
+--- src/components/hello-world/HelloWorld.js
++++ src/components/hello-world/HelloWorld.js
+@@ -0,0 +1,24 @@
++import React, { useContext } from "react";
++
++import { Context } from "../../context";
++import { setTitle } from "./actions";
++
++const HelloWorld = () => {
++  const {
++    state: {
++      helloWorld: { title },
++    },
++    dispatch,
++  } = useContext(Context);
++
++  const handleChange = ({ target: { value } }) => dispatch(setTitle(value));
++
++  return (
++    <>
++      <input value={title} onChange={handleChange} />
++      <h1>{title}</h1>
++    </>
++  );
++};
++
++export default HelloWorld;
 ```
+
+[&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/components/hello-world/HelloWorld.js)
+
+</details>
+
+<details>
+  <summary>1.8. Subscribe component</summary>
+
+```diff
+--- src/App.js
++++ src/App.js
+@@ -0,0 +1,20 @@
++import React, { createContext, useReducer } from "react";
++
++import helloWorldState from "./components/hello-world/initialState";
++import helloWorldReducer from "./components/hello-world/reducer";
++import { combineReducers, init } from "./utils";
++
++const initialStates = { helloWorld: helloWorldState };
++
++const Context = createContext(initialStates);
++
++const Provider = ({ children }) => {
++  const reducers = combineReducers({ helloWorld: helloWorldReducer });
++  const [state, dispatch] = useReducer(reducers, initialStates, init);
++  const values = { state, dispatch };
++  const { Provider } = Context;
++
++  return <Provider value={values}>{children}</Provider>;
++};
++
++export { Context, Provider };
+```
+
+[&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/App.js)
+
+</details>
+
+---
 
 ## License
 

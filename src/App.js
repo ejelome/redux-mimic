@@ -1,13 +1,9 @@
-import React from "react";
-
-import Counter from "./components/Counter";
-import Title from "./components/Title";
-import { Provider } from "./context";
+import Title from "./components/hello-world/HelloWorld";
+import { Context, Provider } from "./context";
 
 const App = () => (
   <Provider>
     <Title />
-    <Counter />
   </Provider>
 );
 
