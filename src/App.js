@@ -1,9 +1,11 @@
-import Title from "./components/hello-world/HelloWorld";
-import { Context, Provider } from "./context";
+import React from "react";
+
+import HelloWorld from "./components/hello-world/HelloWorld";
+import { Provider } from "./context";
 
 const App = () => (
   <Provider>
-    <Title />
+    <HelloWorld />
   </Provider>
 );
 

@@ -1,24 +1,20 @@
-import { createContext, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 
 import helloWorldState from "./components/hello-world/initialState";
 import helloWorldReducer from "./components/hello-world/reducer";
-import { combineReducers, combineStates, init } from "./utils";
+import { combineReducers, init } from "./utils";
 
-const initialStates = {
-  helloWorld: helloWorldState,
-};
+const initialStates = { helloWorld: helloWorldState };
 
-const reducers = combineReducers({
-  helloWorld: helloWorldReducer,
-});
+const Context = createContext(initialStates);
 
-const Context = createContext({});
-
-const Provider = (props) => {
+const Provider = ({ children }) => {
+  const reducers = combineReducers({ helloWorld: helloWorldReducer });
   const [state, dispatch] = useReducer(reducers, initialStates, init);
   const values = { state, dispatch };
+  const { Provider } = Context;
 
-  return <Context.Provider value={values}>{props.children}</Context.Provider>;
+  return <Provider value={values}>{children}</Provider>;
 };
 
 export { Context, Provider };

@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 
 import { Context } from "../../context";
 import { setTitle } from "./actions";
 
-const Title = () => {
+const HelloWorld = () => {
   const {
     state: {
       helloWorld: { title },
@@ -21,4 +21,4 @@ const Title = () => {
   );
 };
 
-export default Title;
+export default HelloWorld;

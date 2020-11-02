@@ -1,5 +1,3 @@
-const initialState = {
-  title: "hello, world",
-};
+const initialState = { title: "hello, world" };
 
 export default initialState;
