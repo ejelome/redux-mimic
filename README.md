@@ -241,27 +241,19 @@ src/
 ```diff
 --- src/App.js
 +++ src/App.js
-@@ -0,0 +1,20 @@
-+import React, { createContext, useReducer } from "react";
+@@ -0,0 +1,12 @@
++import React from "react";
 +
-+import helloWorldState from "./components/hello-world/initialState";
-+import helloWorldReducer from "./components/hello-world/reducer";
-+import { combineReducers, init } from "./utils";
++import HelloWorld from "./components/hello-world/HelloWorld";
++import { Provider } from "./context";
 +
-+const initialStates = { helloWorld: helloWorldState };
++const App = () => (
++    <Provider>
++    <HelloWorld />
++    </Provider>
++);
 +
-+const Context = createContext(initialStates);
-+
-+const Provider = ({ children }) => {
-+  const reducers = combineReducers({ helloWorld: helloWorldReducer });
-+  const [state, dispatch] = useReducer(reducers, initialStates, init);
-+  const values = { state, dispatch };
-+  const { Provider } = Context;
-+
-+  return <Provider value={values}>{children}</Provider>;
-+};
-+
-+export { Context, Provider };
++export default App;
 ```
 
 [&#9654; View code &rarr;](https://codesandbox.io/s/redux-mimic-jjbxp?file=/src/App.js)
